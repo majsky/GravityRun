@@ -5,7 +5,7 @@ import java.util.List;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
-
+//TODO remove
 public class World {
 	public TiledMap map;
 	public List<Rectangle> blocks;
@@ -25,13 +25,5 @@ public class World {
 				}
 			}
 		}
-	}
-	
-	public void offsetCollision(int x, int y){
-		List<Rectangle> newCollision = new ArrayList<Rectangle>();
-		for(Rectangle r:blocks){
-			newCollision.add(new Rectangle(r.getX()/map.getTileWidth() + x * map.getTileWidth(), r.getY()/map.getHeight() + x * map.getHeight(), map.getTileWidth(), map.getTileHeight()));
-		}
-		blocks = newCollision;
 	}
 }

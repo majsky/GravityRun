@@ -2,30 +2,40 @@ package sk.majsky.GravityRun.entity;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
 import sk.majsky.GravityRun.world.World;
 
-public class Entity extends Rectangle {
+public class Entity extends Rectangle{
 	private static final long serialVersionUID = 1L;
 
-	public final float FALL_SPEED = 0.1f;
+	public final float FALL_SPEED = 0.2f;
 	public final float RUN_SPEED = 0.15f;
 	
-	private float gravity = 0, speed = 0;
-	private Rectangle leg, front;
+	protected float switchto = 0f;
+	
+	protected float gravity = 0, speed = 0;
+	protected Rectangle leg, front;
 	
 	public Entity(float x, float y, float width, float height) {
 		super(x, y, width, height);
 		leg = new Rectangle(x +1 , y + height + 1, width - 1, 1);
-		front = new Rectangle(x + width + 1, y+1, 1, height-1);	
+		front = new Rectangle(x + width + 1, y+1, 1, height-1);
+		switchto = FALL_SPEED;
+	}
+	
+	public void setBounds(float x, float y, float width, float height){
+		leg.setBounds(x +1 , y + height + 1, width - 1, 1);
+		front.setBounds(x + width + 1, y+1, 1, height-1);
+		super.setBounds(x, y, width, height);
 	}
 	
 	public void update(int delta, World w){
-		gravity = FALL_SPEED;
+		gravity = switchto;
 		speed = RUN_SPEED;
 		leg.setX(x + 1);
-		leg.setY(y+height+1);
+		leg.setY(switchto>0?y+height+1:y-1);
 		front.setX(x + width + 1);
 		front.setY(y+1);
 		for(Rectangle r:w.blocks){
@@ -47,5 +57,4 @@ public class Entity extends Rectangle {
 		g.draw(front);
 		
 	}
-
 }
